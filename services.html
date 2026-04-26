@@ -4,16 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services | Smart India Post</title>
+    <title>Our Services | Smart India Post</title>
+    <meta name="description" content="Explore Smart India Post's range of postal services including Speed Post, Registered Post, Money Orders, DIGIPIN Delivery, and more.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="theme-color" content="#800000">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -32,40 +36,214 @@
                 <li><a href="services.html" class="active">Services</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="nav-toggle">
+            <div class="nav-toggle" id="nav-toggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
+        <div class="nav-overlay" id="nav-overlay"></div>
     </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <i class="fa-solid fa-layer-group page-hero-icon"></i>
+            <h1>Our Services</h1>
+            <p>Comprehensive postal solutions designed for a modern, connected India.</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Services</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="container stats-bar-inner">
+            <div class="stat-item">
+                <div class="stat-num">1.5L+</div>
+                <div class="stat-label">Post Offices</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">4Cr+</div>
+                <div class="stat-label">Deliveries/Day</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">99.9%</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">195+</div>
+                <div class="stat-label">Countries Reached</div>
+            </div>
+        </div>
+    </div>
 
     <!-- Services Section -->
     <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title">Why Choose Us?</h2>
+            <h2 class="section-title reveal">Why Choose Us?</h2>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card reveal reveal-delay-1">
                     <i class="fa-solid fa-clock-rotate-left"></i>
-                    <h3>Real-Time Updates</h3>
-                    <p>Get instant notifications about your parcel's location and status.</p>
+                    <h3>Real-Time Tracking</h3>
+                    <p>Get instant, live updates about your parcel's exact location and status at every checkpoint, from booking to delivery.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card reveal reveal-delay-2">
                     <i class="fa-solid fa-shield-halved"></i>
-                    <h3>Secure OTP</h3>
-                    <p>Enhanced security with OTP verification at the time of delivery.</p>
+                    <h3>Secure OTP Delivery</h3>
+                    <p>Enhanced last-mile security with a unique OTP sent to the recipient's registered mobile, ensuring your package reaches the right hands.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card reveal reveal-delay-3">
                     <i class="fa-solid fa-map-location-dot"></i>
-                    <h3>Digipin Integration</h3>
-                    <p>Faster sorting and delivery using the revolutionary 10-digit Digipin system.</p>
+                    <h3>DIGIPIN Integration</h3>
+                    <p>Faster, pinpoint-accurate sorting and delivery using India's revolutionary 10-digit DIGIPIN geocode system.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-1">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>Speed Post</h3>
+                    <p>Our priority express mail service guarantees delivery within 1–4 business days to any destination across India.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-2">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <h3>Money Orders</h3>
+                    <p>Send money safely to anyone in India via our trusted electronic and paper money order services, backed by the Government of India.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-3">
+                    <i class="fa-solid fa-globe"></i>
+                    <h3>International Mail</h3>
+                    <p>Send parcels and documents to 195+ countries worldwide with competitive rates, tracking, and customs support.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-1">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h3>Registered Post</h3>
+                    <p>Send important letters and documents with a proof of posting. Registered mail is trackable and requires recipient acknowledgement.</p>
+                </div>
+                <div class="service-card reveal reveal-delay-2">
+                    <i class="fa-solid fa-piggy-bank"></i>
+                    <h3>Post Office Savings</h3>
+                    <p>Access Government-backed savings schemes, PPF, Sukanya Samriddhi, and NSC through your nearest post office branch.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services CTA -->
+    <section class="cta-section">
+        <div class="container cta-inner reveal">
+            <div class="cta-text">
+                <h2>Ready to Send a Parcel?</h2>
+                <p>Book in minutes — no account required. Instant consignment ID generated.</p>
+            </div>
+            <div class="cta-actions">
+                <a href="booking.html" class="cta-btn-primary">
+                    <i class="fa-solid fa-box-open"></i> Book a Post
+                </a>
+                <a href="contact.html" class="cta-btn-outline">
+                    Contact Support <i class="fa-solid fa-headset"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title reveal">Service FAQs</h2>
+            <p class="section-subtitle reveal">Quick answers about our postal services</p>
+            <div class="faq-list">
+                <div class="faq-item reveal reveal-delay-1">
+                    <button class="faq-question" aria-expanded="false">
+                        What is the difference between Speed Post and Registered Post?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Speed Post is a priority express service guaranteeing delivery within 1–4 business days with full tracking. Registered Post is slower but provides legal proof of posting and requires the recipient's acknowledgement signature, making it ideal for legal documents.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-2">
+                    <button class="faq-question" aria-expanded="false">
+                        How do I use DIGIPIN for delivery?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>DIGIPIN is India's 10-digit geocode for precise address identification. During booking, enter your recipient's DIGIPIN alongside their address. This helps our delivery agents locate exact drop points, especially in areas with non-standard addresses.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-3">
+                    <button class="faq-question" aria-expanded="false">
+                        Can I send parcels internationally?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! Smart India Post supports international parcels and letters to 195+ countries. Pricing varies by destination and weight. All international shipments include customs documentation support and tracking where available.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <button class="faq-question" aria-expanded="false">
+                        Are Post Office savings schemes safe?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes. All Post Office savings schemes are backed by the Government of India, making them among the safest investment options available. Schemes include PPF, Sukanya Samriddhi Yojana, National Savings Certificate, and more.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
+
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-brand footer-col">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-paper-plane"></i>&nbsp; Smart India Post
+                    </a>
+                    <p>Delivering trust across every pin-code in India. Fast, secure, and smart postal services for 1.4 billion citizens.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+                        <li><a href="booking.html"><i class="fa-solid fa-angle-right"></i> Book a Post</a></li>
+                        <li><a href="services.html"><i class="fa-solid fa-angle-right"></i> Services</a></li>
+                        <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Speed Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Registered Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Money Orders</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> DIGIPIN Delivery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:18001120011"><i class="fa-solid fa-phone"></i> 1800-11-2011</a></li>
+                        <li><a href="mailto:support@indiapost.gov.in"><i class="fa-solid fa-envelope"></i> support@indiapost.gov.in</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> Dak Bhawan, New Delhi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
         </div>
     </footer>
 

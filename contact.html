@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Smart India Post</title>
+    <meta name="description" content="Contact Smart India Post for help with parcel tracking, booking, money orders, or complaints. Reach our 24/7 helpline at 1800-11-2011 or email support@indiapost.gov.in.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +14,11 @@
         rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="theme-color" content="#800000">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -32,17 +37,30 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
-            <div class="nav-toggle">
+            <div class="nav-toggle" id="nav-toggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
+        <div class="nav-overlay" id="nav-overlay"></div>
     </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <i class="fa-solid fa-headset page-hero-icon"></i>
+            <h1>Get in Touch</h1>
+            <p>We are here to help you with any queries regarding our services, 24/7.</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Contact</span>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Get in Touch</h2>
-            <p class="section-subtitle">We are here to help you with any queries regarding our services.</p>
 
             <div class="contact-grid">
                 <!-- Contact Info Cards -->
@@ -117,6 +135,69 @@
                         <button type="submit" class="btn-primary btn-full">Send Inquiry <i
                                 class="fa-solid fa-paper-plane"></i></button>
                     </form>
+
+                    <!-- Success State -->
+                    <div id="contact-success" class="contact-success hidden">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <h3>Message Sent!</h3>
+                        <p>Thank you for reaching out. Our support team will respond within 24 hours.</p>
+                        <button class="btn-primary" onclick="document.getElementById('contact-success').classList.add('hidden'); document.getElementById('contact-form').classList.remove('hidden')">Send Another</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title reveal">Frequently Asked Questions</h2>
+            <p class="section-subtitle reveal">Quick answers to common queries</p>
+            <div class="faq-list">
+                <div class="faq-item reveal reveal-delay-1">
+                    <button class="faq-question" aria-expanded="false">
+                        How do I track my consignment?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Go to our <a href="index.html">Home page</a>, enter your Consignment Number in the tracking box, solve the CAPTCHA, and click Search. Live status with full timeline is shown instantly.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-2">
+                    <button class="faq-question" aria-expanded="false">
+                        What is DIGIPIN and how do I use it?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>DIGIPIN is India's 10-digit geocode system for pinpoint address identification. Provide your recipient's DIGIPIN during booking for faster and more accurate last-mile delivery.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-3">
+                    <button class="faq-question" aria-expanded="false">
+                        What is OTP delivery verification?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>When your parcel is out for delivery, your registered mobile receives a one-time OTP. The delivery agent confirms receipt by verifying this code, ensuring your parcel reaches the right person.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <button class="faq-question" aria-expanded="false">
+                        How long does Speed Post delivery take?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Speed Post guarantees delivery within 1–4 business days for domestic destinations across India. Metro-to-metro deliveries typically arrive within 1–2 days.</p>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-2">
+                    <button class="faq-question" aria-expanded="false">
+                        How do I raise a complaint?
+                        <i class="fa-solid fa-chevron-down faq-icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Call our toll-free helpline <strong>1800-11-2011</strong> (24/7) or email <strong>support@indiapost.gov.in</strong>. You can also use the contact form above and we'll respond within 24 hours.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,7 +206,54 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-brand footer-col">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-paper-plane"></i>&nbsp; Smart India Post
+                    </a>
+                    <p>Delivering trust across every pin-code in India. Fast, secure, and smart postal services for 1.4 billion citizens.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+                        <li><a href="booking.html"><i class="fa-solid fa-angle-right"></i> Book a Post</a></li>
+                        <li><a href="services.html"><i class="fa-solid fa-angle-right"></i> Services</a></li>
+                        <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Speed Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Registered Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Money Orders</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> DIGIPIN Delivery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:18001120011"><i class="fa-solid fa-phone"></i> 1800-11-2011</a></li>
+                        <li><a href="mailto:support@indiapost.gov.in"><i class="fa-solid fa-envelope"></i> support@indiapost.gov.in</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> Dak Bhawan, New Delhi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
         </div>
     </footer>
 

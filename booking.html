@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book a Post | Smart India Post</title>
+    <meta name="description" content="Book a new postal consignment with Smart India Post. Fill sender and receiver details, select your service type, and generate a unique consignment ID instantly.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +14,11 @@
         rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="theme-color" content="#800000">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -32,16 +37,30 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="nav-toggle">
+            <div class="nav-toggle" id="nav-toggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
+        <div class="nav-overlay" id="nav-overlay"></div>
     </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <i class="fa-solid fa-box-open page-hero-icon"></i>
+            <h1>Book a New Consignment</h1>
+            <p>Fill in the details below to generate your unique consignment ID instantly.</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Book a Post</span>
+            </div>
+        </div>
+    </section>
 
     <!-- Book a Post Section -->
     <section id="book-post" class="book-post">
         <div class="container">
-            <h2 class="section-title">Book a New Consignment</h2>
 
             <div class="booking-container card">
                 <form id="booking-form" class="booking-form">
@@ -68,8 +87,7 @@
                             <div class="input-row">
                                 <input type="text" placeholder="Pincode (6 digits)" maxlength="6" pattern="\d{6}"
                                     required>
-                                <input type="text" id="booking-digipin" placeholder="10-Digit DIGIPIN" maxlength="10"
-                                    pattern="\d{10}" required>
+                                <input type="text" id="booking-digipin" placeholder="DIGIPIN (Optional)" maxlength="10">
                             </div>
                         </div>
                     </div>
@@ -122,8 +140,17 @@
                     <h3>Booking Successful!</h3>
                     <p>Your Consignment Number is:</p>
                     <div class="consignment-badge" id="new-consignment-id">CP000000000IN</div>
-                    <button class="btn-secondary" onclick="window.location.reload()">Book Another</button>
+                    <p class="booking-eta"><i class="fa-solid fa-clock"></i> Estimated delivery: <strong id="booking-eta-date">—</strong></p>
+                    <div class="booking-success-actions">
+                        <button class="btn-secondary" onclick="window.location.reload()">
+                            <i class="fa-solid fa-plus"></i> Book Another
+                        </button>
+                        <button class="btn-primary" id="print-receipt-btn">
+                            <i class="fa-solid fa-print"></i> Print Receipt
+                        </button>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -131,7 +158,54 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-brand footer-col">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-paper-plane"></i>&nbsp; Smart India Post
+                    </a>
+                    <p>Delivering trust across every pin-code in India. Fast, secure, and smart postal services for 1.4 billion citizens.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+                        <li><a href="booking.html"><i class="fa-solid fa-angle-right"></i> Book a Post</a></li>
+                        <li><a href="services.html"><i class="fa-solid fa-angle-right"></i> Services</a></li>
+                        <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Speed Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Registered Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Money Orders</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> DIGIPIN Delivery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:18001120011"><i class="fa-solid fa-phone"></i> 1800-11-2011</a></li>
+                        <li><a href="mailto:support@indiapost.gov.in"><i class="fa-solid fa-envelope"></i> support@indiapost.gov.in</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> Dak Bhawan, New Delhi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
         </div>
     </footer>
 

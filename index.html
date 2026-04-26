@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart India Post | Next-Gen Delivery Management</title>
+    <title>Smart India Post | Fast, Secure & Smart Postal Services</title>
+    <meta name="description" content="Track consignments, book parcels, and access India's most trusted postal network. Smart India Post delivers across 1.5 lakh post offices with real-time tracking and OTP delivery verification.">
 
     <!-- Google Fonts: Poppins (Modern & Clean) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +14,17 @@
         rel="stylesheet">
 
     <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:title" content="Smart India Post | Fast, Secure & Smart Postal Services">
+    <meta property="og:description" content="Track consignments, book parcels, and access India's most trusted postal network across 1.5 lakh post offices.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#800000">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -32,10 +43,11 @@
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <div class="nav-toggle">
+            <div class="nav-toggle" id="nav-toggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
+        <div class="nav-overlay" id="nav-overlay"></div>
     </nav>
 
     <!-- Hero Section -->
@@ -120,10 +132,210 @@
         </div>
     </section>
 
+    <!-- ── Stats Bar ───────────────────────────────────────────────────── -->
+    <div class="stats-bar">
+        <div class="container stats-bar-inner">
+            <div class="stat-item">
+                <div class="stat-num">1.5L+</div>
+                <div class="stat-label">Post Offices</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">4Cr+</div>
+                <div class="stat-label">Deliveries/Day</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">99.9%</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">195+</div>
+                <div class="stat-label">Countries Reached</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── How It Works ────────────────────────────────────────────────────── -->
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title reveal">How It Works</h2>
+            <p class="section-subtitle reveal">Send or track your parcel in three simple steps</p>
+            <div class="steps-grid">
+                <div class="step-card reveal reveal-delay-1">
+                    <div class="step-number">01</div>
+                    <div class="step-icon"><i class="fa-solid fa-file-pen"></i></div>
+                    <h3>Book Online</h3>
+                    <p>Fill in sender & receiver details, select your service type, and get an instant price estimate.</p>
+                </div>
+                <div class="step-connector reveal"></div>
+                <div class="step-card reveal reveal-delay-2">
+                    <div class="step-number">02</div>
+                    <div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <h3>We Pick & Ship</h3>
+                    <p>Drop at the nearest post office or schedule a pickup. We handle sorting, routing, and transit.</p>
+                </div>
+                <div class="step-connector reveal"></div>
+                <div class="step-card reveal reveal-delay-3">
+                    <div class="step-number">03</div>
+                    <div class="step-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <h3>OTP Delivery</h3>
+                    <p>Your recipient gets a unique OTP to confirm receipt — ensuring secure, verified last-mile delivery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Why Trust Us ─────────────────────────────────────────────────── -->
+    <section class="trust-section">
+        <div class="container">
+            <h2 class="section-title reveal">Why India Trusts Us</h2>
+            <div class="trust-grid">
+                <div class="trust-card reveal reveal-delay-1">
+                    <div class="trust-icon"><i class="fa-solid fa-network-wired"></i></div>
+                    <div class="trust-body">
+                        <h4>Largest Postal Network</h4>
+                        <p>Over 1.5 lakh post offices spanning every district, taluka, and village in India.</p>
+                    </div>
+                </div>
+                <div class="trust-card reveal reveal-delay-2">
+                    <div class="trust-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="trust-body">
+                        <h4>Government Backed</h4>
+                        <p>Operated under the Ministry of Communications — reliable, regulated, and accountable.</p>
+                    </div>
+                </div>
+                <div class="trust-card reveal reveal-delay-3">
+                    <div class="trust-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+                    <div class="trust-body">
+                        <h4>Real-Time Tracking</h4>
+                        <p>Live consignment status with timestamped checkpoints from booking to delivery.</p>
+                    </div>
+                </div>
+                <div class="trust-card reveal reveal-delay-1">
+                    <div class="trust-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                    <div class="trust-body">
+                        <h4>24/7 Customer Support</h4>
+                        <p>Toll-free helpline, email support, and grievance redressal — always available for you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA Banner ───────────────────────────────────────────────────── -->
+    <section class="cta-section">
+        <div class="container cta-inner reveal">
+            <div class="cta-text">
+                <h2>Ready to Ship Something?</h2>
+                <p>Book a consignment in under 2 minutes — no account needed.</p>
+            </div>
+            <div class="cta-actions">
+                <a href="booking.html" class="cta-btn-primary">
+                    <i class="fa-solid fa-box-open"></i> Book a Post
+                </a>
+                <a href="services.html" class="cta-btn-outline">
+                    Explore Services <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ── Testimonials ─────────────────────────────────────────────────── -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title reveal">What Citizens Are Saying</h2>
+            <p class="section-subtitle reveal">Real experiences from across India</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal reveal-delay-1">
+                    <div class="testimonial-quote"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testimonial-text">The OTP delivery verification is a game-changer. I never worry about my parcels being misdelivered anymore. Brilliant service!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AK</div>
+                        <div>
+                            <strong>Arun Kumar</strong>
+                            <span>Bengaluru, Karnataka</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-2">
+                    <div class="testimonial-quote"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testimonial-text">Speed Post delivered my documents to Mumbai in just one day. The live tracking updates kept me informed at every step. Outstanding!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PS</div>
+                        <div>
+                            <strong>Priya Sharma</strong>
+                            <span>Jaipur, Rajasthan</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal reveal-delay-3">
+                    <div class="testimonial-quote"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testimonial-text">Booking online took less than 2 minutes and my village received the parcel through the local post office. Truly the backbone of India.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RM</div>
+                        <div>
+                            <strong>Rajan Mishra</strong>
+                            <span>Varanasi, Uttar Pradesh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
+
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+            <div class="footer-grid">
+                <div class="footer-brand footer-col">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-paper-plane"></i>&nbsp; Smart India Post
+                    </a>
+                    <p>Delivering trust across every pin-code in India. Fast, secure, and smart postal services for 1.4 billion citizens.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
+                        <li><a href="booking.html"><i class="fa-solid fa-angle-right"></i> Book a Post</a></li>
+                        <li><a href="services.html"><i class="fa-solid fa-angle-right"></i> Services</a></li>
+                        <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Speed Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Registered Post</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Money Orders</a></li>
+                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> DIGIPIN Delivery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="tel:18001120011"><i class="fa-solid fa-phone"></i> 1800-11-2011</a></li>
+                        <li><a href="mailto:support@indiapost.gov.in"><i class="fa-solid fa-envelope"></i> support@indiapost.gov.in</a></li>
+                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> Dak Bhawan, New Delhi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Smart India Post. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
         </div>
     </footer>
 
