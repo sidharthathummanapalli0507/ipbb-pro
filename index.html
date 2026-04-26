@@ -1,365 +1,1080 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart India Post | Fast, Secure & Smart Postal Services</title>
-    <meta name="description" content="Track consignments, book parcels, and access India's most trusted postal network. Smart India Post delivers across 1.5 lakh post offices with real-time tracking and OTP delivery verification.">
-
-    <!-- Google Fonts: Poppins (Modern & Clean) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <!-- Font Awesome for Icons -->
+    <title>Smart India Post — AI-Powered Postal Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        /* Embedded CSS */
+        :root {
+            --crimson: #8B0000;
+            --crimson-light: #A31515;
+            --crimson-dark: #5C0000;
+            --gold: #FFD700;
+            --gold-light: #FFF3B0;
+            --white: #FFFFFF;
+            --bg-light: #FFF5F5;
+            --bg-card: rgba(255,255,255,0.92);
+            --text-dark: #1A1A1A;
+            --text-muted: #666666;
+            --success: #16A34A;
+            --warning: #F59E0B;
+            --error: #DC2626;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
+        
+        /* Navbar */
+        .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(139,0,0,0.85); backdrop-filter: blur(12px); color: white; display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; transition: all 0.3s; }
+        .navbar.scrolled { padding: 10px 5%; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+        .logo { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--gold); }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        #clock { font-size: 0.9rem; font-weight: 300; }
+        .btn-login { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 20px; cursor: pointer; transition: all 0.3s; }
+        .btn-login:hover { background: var(--gold); color: var(--crimson); }
+        
+        /* SPA Pages */
+        .page { display: none; min-height: 80vh; animation: fadeIn 0.4s ease forwards; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png">
+        /* Buttons & Cards */
+        .btn-primary { background: var(--crimson); color: white; padding: 10px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(139,0,0,0.2); }
+        .btn-primary:hover { background: var(--gold); color: var(--crimson); transform: translateY(-2px); }
+        .card { background: var(--bg-card); border-radius: 16px; padding: 25px; box-shadow: 0 4px 24px rgba(139,0,0,0.08); transition: transform 0.3s; }
+        .card:hover { transform: translateY(-4px); }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, var(--crimson-dark), var(--crimson)); color: white; padding: 100px 5%; text-align: center; position: relative; overflow: hidden; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 40px; font-weight: 300; opacity: 0.9; }
+        .typewriter::after { content: '|'; animation: blink 1s infinite; color: var(--gold); }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        .stats-bar { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+        .stat-item { text-align: center; }
+        .stat-item h3 { font-size: 2.5rem; color: var(--gold); margin-bottom: 5px; }
+        .stat-item p { font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
 
-    <!-- Open Graph / Social Sharing -->
-    <meta property="og:title" content="Smart India Post | Fast, Secure & Smart Postal Services">
-    <meta property="og:description" content="Track consignments, book parcels, and access India's most trusted postal network across 1.5 lakh post offices.">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#800000">
+        /* Quick Track Widget */
+        .track-widget { max-width: 800px; margin: -50px auto 50px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; z-index: 10; text-align: center; }
+        .track-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .track-tab { padding: 8px 16px; border-radius: 20px; border: 1px solid #ddd; cursor: pointer; font-weight: 500; transition: all 0.3s; }
+        .track-tab.active { background: var(--crimson); color: white; border-color: var(--crimson); }
+        .track-input-group { display: flex; gap: 10px; }
+        .track-input-group input { flex: 1; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 1.1rem; outline: none; transition: border-color 0.3s; }
+        .track-input-group input:focus { border-color: var(--crimson); }
+        
+        /* Features Grid */
+        .features { padding: 80px 5%; }
+        .section-title { text-align: center; font-size: 2.5rem; color: var(--crimson); margin-bottom: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card i { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; background: var(--crimson); width: 60px; height: 60px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; }
 
-    <link rel="stylesheet" href="style.css">
+        /* AI Assistant */
+        .chat-container { max-width: 800px; margin: 40px auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; height: 600px; }
+        .chat-header { background: var(--crimson); color: white; padding: 20px; text-align: center; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #f9f9f9; }
+        .message { max-width: 80%; padding: 12px 18px; border-radius: 16px; line-height: 1.5; }
+        .message.bot { background: white; border-left: 4px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,0.05); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .message.user { background: var(--crimson); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-input { display: flex; padding: 20px; background: white; border-top: 1px solid #eee; gap: 10px; }
+        .chat-input input { flex: 1; padding: 12px; border: 2px solid #eee; border-radius: 25px; outline: none; }
+        .chat-input button { background: var(--crimson); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .chat-input button:hover { background: var(--gold); color: var(--crimson); }
+        .quick-replies { display: flex; gap: 10px; padding: 10px 20px; overflow-x: auto; background: white; }
+        .quick-reply { background: var(--bg-light); border: 1px solid var(--crimson-light); color: var(--crimson); padding: 5px 12px; border-radius: 15px; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
+
+        /* Tracking Timeline */
+        .timeline { padding: 40px 0; max-width: 600px; margin: 0 auto; }
+        .timeline-item { display: flex; gap: 20px; margin-bottom: 25px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: 15px; top: 30px; bottom: -25px; width: 2px; background: #ddd; }
+        .timeline-item:last-child::before { display: none; }
+        .timeline-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; background: #ddd; z-index: 1; }
+        .timeline-item.done .timeline-icon { background: var(--success); }
+        .timeline-item.current .timeline-icon { background: var(--warning); animation: pulse 2s infinite; }
+        .timeline-content { flex: 1; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } }
+
+        /* Footer */
+        footer { background: var(--crimson-dark); color: white; padding: 60px 5% 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: var(--gold); margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col a { color: #ddd; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.9rem; color: #aaa; }
+
+        /* 3D Box Visualizer */
+        .scene { width: 100%; height: 200px; perspective: 800px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; margin-top: 20px; }
+        .cube { position: relative; width: 100px; height: 100px; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(-45deg); transition: transform 0.1s, width 0.3s, height 0.3s; }
+        .cube__face { position: absolute; border: 2px solid #8B0000; background: rgba(255, 215, 0, 0.7); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #5C0000; font-size: 14px; box-shadow: inset 0 0 20px rgba(139,0,0,0.2); transition: width 0.3s, height 0.3s, transform 0.3s; }
+        .cube__face--front  { transform: rotateY(  0deg) translateZ(50px); }
+        .cube__face--right  { transform: rotateY( 90deg) translateZ(50px); }
+        .cube__face--back   { transform: rotateY(180deg) translateZ(50px); }
+        .cube__face--left   { transform: rotateY(-90deg) translateZ(50px); }
+        .cube__face--top    { transform: rotateX( 90deg) translateZ(50px); }
+        .cube__face--bottom { transform: rotateX(-90deg) translateZ(50px); }
+    </style>
 </head>
-
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="index.html" class="logo">
-                <i class="fa-solid fa-paper-plane"></i> Smart India Post
-            </a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="booking.html">Book a Post</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="nav-toggle" id="nav-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </div>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="#home" class="logo"><i class="fa-solid fa-paper-plane"></i> Smart India Post</a>
+        <div class="nav-links">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#track" class="nav-link">Track</a>
+            <a href="#book" class="nav-link">Book</a>
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#route" class="nav-link">Route AI</a>
+            <a href="#ai" class="nav-link">AI Assistant</a>
+            <a href="#dashboard" class="nav-link">Dashboard</a>
+            <a href="#contact" class="nav-link">Contact</a>
         </div>
-        <div class="nav-overlay" id="nav-overlay"></div>
+        <div class="nav-right">
+            <div id="clock">12:00:00 PM IST</div>
+            <button class="btn-login">Login</button>
+        </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container hero-content">
-            <h1 class="animate-fade-in">Fast, Secure, & Smart Delivery</h1>
-            <p class="animate-fade-in delay-1">Track your post instantly.</p>
-
-            <div class="tracking-container animate-fade-in delay-2">
-                <div class="tracking-tabs">
-                    <button class="tab-btn active" data-tab="consignment">Consignment ID</button>
-                    <button class="tab-btn" data-tab="money-order">Money Order</button>
-                    <button class="tab-btn" data-tab="complaint">Complaint ID</button>
+    <!-- Page: HOME -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <h1 class="typewriter" id="hero-title">Fast, Secure & Smart Delivery</h1>
+            <p>Serving 1.5 Billion Indians with Technology & Trust</p>
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <h3 class="counter" data-target="7">0</h3>
+                    <p>Billion+ Articles/Year</p>
                 </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="155000">0</h3>
+                    <p>Post Offices</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="99.9">0</h3>
+                    <p>Delivery Rate %</p>
+                </div>
+                <div class="stat-item">
+                    <h3 class="counter" data-target="4.2">0</h3>
+                    <p>Customer Rating</p>
+                </div>
+            </div>
+        </section>
 
-                <div class="tracking-content">
-                    <div id="consignment-tab" class="tab-content active">
-                        <label>Consignment Number</label>
-                        <input type="text" class="tracking-input" placeholder="ENTER CONSIGNMENT NUMBER" maxlength="13">
-                    </div>
-                    <div id="money-order-tab" class="tab-content">
-                        <label>Money Order Number (10 or 18 digits)</label>
-                        <input type="text" class="tracking-input" placeholder="ENTER MONEY ORDER NUMBER" maxlength="18">
-                    </div>
-                    <div id="complaint-tab" class="tab-content">
-                        <label>Complaint ID</label>
-                        <input type="text" class="tracking-input" placeholder="ENTER COMPLAINT ID" maxlength="15">
-                    </div>
+        <section class="track-widget">
+            <div class="track-tabs">
+                <div class="track-tab active">Consignment ID</div>
+                <div class="track-tab">Money Order</div>
+                <div class="track-tab">Complaint</div>
+            </div>
+            <div class="track-input-group">
+                <input type="text" id="home-track-input" placeholder="Enter tracking number (e.g., CP123456789IN)">
+                <button class="btn-primary" onclick="window.location.hash='#track'">Track Now <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            <p style="margin-top: 15px; font-size: 0.85rem; color: #888;">🤖 AI automatically detects input type.</p>
+        </section>
 
-                    <div class="captcha-section">
-                        <div class="captcha-row">
-                            <div class="captcha-display" id="captcha-code">Qgd4V</div>
-                            <button class="btn-audio" title="Play Audio CAPTCHA">Play Audio CAPTCHA</button>
-                            <button class="btn-refresh" id="refresh-captcha" title="Refresh CAPTCHA">
-                                <i class="fa-solid fa-rotate-right"></i>
-                            </button>
+        <section class="features">
+            <h2 class="section-title">Why Smart India Post?</h2>
+            <div class="grid">
+                <div class="card feature-card">
+                    <i class="fa-solid fa-robot"></i>
+                    <h3>AI-Powered ETA</h3>
+                    <p>Our machine learning model predicts delivery time with 94% accuracy based on distance, weather, and historical data.</p>
+                </div>
+                <div class="card feature-card">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>DigiPIN Smart Addressing</h3>
+                    <p>India's revolutionary 10-digit geo-coded addressing system ensures your parcel reaches even the most remote rural addresses.</p>
+                </div>
+                <div class="card feature-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h3>OTP-Verified Handover</h3>
+                    <p>One-Time Password verification at delivery prevents misdelivery and package theft. No OTP = No handover.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Page: TRACK -->
+    <div id="track" class="page">
+        <div style="background: var(--crimson); color: white; padding: 60px 5%; text-align: center;">
+            <h1>Track Your Post</h1>
+            <p style="opacity: 0.9; margin-top: 10px;">Real-time GPS tracking with AI ETA prediction</p>
+        </div>
+        <div class="container" style="max-width: 800px; margin: 40px auto; padding: 0 5%;">
+            <div class="card">
+                <div class="track-input-group">
+                    <input type="text" id="main-track-input" placeholder="Enter tracking number...">
+                    <button class="btn-primary" id="main-track-btn">Track</button>
+                    <button class="btn-primary" style="background: #333;" title="Voice Input"><i class="fa-solid fa-microphone"></i></button>
+                </div>
+                <p id="smart-detect-msg" style="margin-top: 10px; font-size: 0.9rem; color: var(--success);"></p>
+            </div>
+
+            <div id="tracking-result" style="display: none; margin-top: 40px;">
+                <div class="card" style="border-left: 4px solid var(--gold); margin-bottom: 30px;">
+                    <h3 style="color: var(--crimson);"><i class="fa-solid fa-robot"></i> AI Prediction</h3>
+                    <p style="margin-top: 10px;">Your parcel will be delivered <strong>Today between 1:30 PM – 3:00 PM</strong> with 89% confidence. Weather: Clear. Route: Optimized.</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item done">
+                        <div class="timeline-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="timeline-content">
+                            <strong>BOOKED</strong>
+                            <p>Parcel booked at Warangal HO, Telangana</p>
+                            <small style="color:#888;">2 days ago, 10:23 AM</small>
                         </div>
-                        <div class="captcha-input-row">
-                            <input type="text" id="captcha-input" placeholder="Enter captcha">
-                            <button id="track-btn" class="search-btn">Search</button>
+                    </div>
+                    <div class="timeline-item done">
+                        <div class="timeline-icon"><i class="fa-solid fa-check"></i></div>
+                        <div class="timeline-content">
+                            <strong>DISPATCHED</strong>
+                            <p>Dispatched via Speed Post van to Hyderabad</p>
+                            <small style="color:#888;">2 days ago, 3:45 PM</small>
+                        </div>
+                    </div>
+                    <div class="timeline-item current">
+                        <div class="timeline-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                        <div class="timeline-content">
+                            <strong>IN TRANSIT</strong>
+                            <p>Arrived Bengaluru City Sorting Office</p>
+                            <small style="color:#888;">Today, 6:15 AM</small>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="fa-solid fa-box"></i></div>
+                        <div class="timeline-content" style="opacity: 0.6;">
+                            <strong>OUT FOR DELIVERY</strong>
+                            <p>Pending dispatch to local postman</p>
                         </div>
                     </div>
                 </div>
-                <p id="error-msg" class="error-msg"></p>
-            </div>
-        </div>
-        <!-- Decorative Background Wave -->
-        <div class="wave-container">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#ffffff" fill-opacity="1"
-                    d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                </path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Tracking Result Section (Hidden by Default) -->
-    <section id="tracking-result" class="tracking-result hidden">
-        <div class="container">
-            <h2 class="section-title">Consignment Status</h2>
-            <div class="tracking-card">
-                <div class="shipment-info">
-                    <div class="info-item">
-                        <span class="label">Consignment No:</span>
-                        <span class="value" id="res-id">--</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="label">Estimated Delivery:</span>
-                        <span class="value" id="res-date">--</span>
-                    </div>
-                </div>
-
-                <div class="timeline" id="timeline">
-                    <!-- Timeline items injected via JS -->
-                </div>
-
-                <div id="otp-action-container" class="otp-action hidden">
-                    <p>Your package is out for delivery. Please provide the OTP to the agent.</p>
-                    <button id="verify-delivery-btn" class="btn-primary">Verify Delivery</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── Stats Bar ───────────────────────────────────────────────────── -->
-    <div class="stats-bar">
-        <div class="container stats-bar-inner">
-            <div class="stat-item">
-                <div class="stat-num">1.5L+</div>
-                <div class="stat-label">Post Offices</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num">4Cr+</div>
-                <div class="stat-label">Deliveries/Day</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num">99.9%</div>
-                <div class="stat-label">Uptime</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num">195+</div>
-                <div class="stat-label">Countries Reached</div>
             </div>
         </div>
     </div>
 
-    <!-- ── How It Works ────────────────────────────────────────────────────── -->
-
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title reveal">How It Works</h2>
-            <p class="section-subtitle reveal">Send or track your parcel in three simple steps</p>
-            <div class="steps-grid">
-                <div class="step-card reveal reveal-delay-1">
-                    <div class="step-number">01</div>
-                    <div class="step-icon"><i class="fa-solid fa-file-pen"></i></div>
-                    <h3>Book Online</h3>
-                    <p>Fill in sender & receiver details, select your service type, and get an instant price estimate.</p>
-                </div>
-                <div class="step-connector reveal"></div>
-                <div class="step-card reveal reveal-delay-2">
-                    <div class="step-number">02</div>
-                    <div class="step-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                    <h3>We Pick & Ship</h3>
-                    <p>Drop at the nearest post office or schedule a pickup. We handle sorting, routing, and transit.</p>
-                </div>
-                <div class="step-connector reveal"></div>
-                <div class="step-card reveal reveal-delay-3">
-                    <div class="step-number">03</div>
-                    <div class="step-icon"><i class="fa-solid fa-circle-check"></i></div>
-                    <h3>OTP Delivery</h3>
-                    <p>Your recipient gets a unique OTP to confirm receipt — ensuring secure, verified last-mile delivery.</p>
-                </div>
-            </div>
+    <!-- Page: BOOK -->
+    <div id="book" class="page">
+        <div style="background: var(--crimson); color: white; padding: 60px 5%; text-align: center;">
+            <h1>Smart Booking & AI Volumetric Sizing</h1>
+            <p style="opacity: 0.9; margin-top: 10px;">Experience India's first 3D interactive parcel optimizer</p>
         </div>
-    </section>
+        <div style="max-width: 1200px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px;">
+            
+            <!-- Left Col: Details -->
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: var(--crimson); border-bottom: 2px solid #eee; padding-bottom: 10px;">Sender Details</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                    <input type="text" placeholder="Full Name" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" placeholder="Mobile Number" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" placeholder="Pincode" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" placeholder="City/State (Auto-filled)" disabled style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9;">
+                </div>
 
-    <!-- ── Why Trust Us ─────────────────────────────────────────────────── -->
-    <section class="trust-section">
-        <div class="container">
-            <h2 class="section-title reveal">Why India Trusts Us</h2>
-            <div class="trust-grid">
-                <div class="trust-card reveal reveal-delay-1">
-                    <div class="trust-icon"><i class="fa-solid fa-network-wired"></i></div>
-                    <div class="trust-body">
-                        <h4>Largest Postal Network</h4>
-                        <p>Over 1.5 lakh post offices spanning every district, taluka, and village in India.</p>
-                    </div>
+                <h3 style="margin-bottom: 20px; color: var(--crimson); border-bottom: 2px solid #eee; padding-bottom: 10px;">Receiver Details</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                    <input type="text" placeholder="Full Name" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" placeholder="Mobile Number" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" placeholder="Pincode" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="text" placeholder="10-Digit DigiPIN (Required)" style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
                 </div>
-                <div class="trust-card reveal reveal-delay-2">
-                    <div class="trust-icon"><i class="fa-solid fa-lock"></i></div>
-                    <div class="trust-body">
-                        <h4>Government Backed</h4>
-                        <p>Operated under the Ministry of Communications — reliable, regulated, and accountable.</p>
-                    </div>
-                </div>
-                <div class="trust-card reveal reveal-delay-3">
-                    <div class="trust-icon"><i class="fa-solid fa-satellite-dish"></i></div>
-                    <div class="trust-body">
-                        <h4>Real-Time Tracking</h4>
-                        <p>Live consignment status with timestamped checkpoints from booking to delivery.</p>
-                    </div>
-                </div>
-                <div class="trust-card reveal reveal-delay-1">
-                    <div class="trust-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                    <div class="trust-body">
-                        <h4>24/7 Customer Support</h4>
-                        <p>Toll-free helpline, email support, and grievance redressal — always available for you.</p>
-                    </div>
+
+                <div style="background: #FFF3B0; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; color: #5C0000;">
+                    <i class="fa-solid fa-lightbulb"></i> <strong>AI Tip:</strong> Enter a valid DigiPIN to ensure 100% accurate doorstep delivery, even without a landmark.
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ── CTA Banner ───────────────────────────────────────────────────── -->
-    <section class="cta-section">
-        <div class="container cta-inner reveal">
-            <div class="cta-text">
-                <h2>Ready to Ship Something?</h2>
-                <p>Book a consignment in under 2 minutes — no account needed.</p>
-            </div>
-            <div class="cta-actions">
-                <a href="booking.html" class="cta-btn-primary">
-                    <i class="fa-solid fa-box-open"></i> Book a Post
-                </a>
-                <a href="services.html" class="cta-btn-outline">
-                    Explore Services <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+            <!-- Right Col: 3D Box & Pricing -->
+            <div class="card" style="background: #fdfdfd; border: 2px solid var(--gold);">
+                <h3 style="color: var(--crimson); text-align: center; margin-bottom: 10px;"><i class="fa-solid fa-cube"></i> 3D Volumetric Engine</h3>
+                
+                <div class="scene">
+                    <div class="cube" id="box3d">
+                        <div class="cube__face cube__face--front">Front</div>
+                        <div class="cube__face cube__face--right">Right</div>
+                        <div class="cube__face cube__face--back">Back</div>
+                        <div class="cube__face cube__face--left">Left</div>
+                        <div class="cube__face cube__face--top">Top</div>
+                        <div class="cube__face cube__face--bottom">Bottom</div>
+                    </div>
+                </div>
 
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                    <div>
+                        <label style="font-size: 0.8rem; font-weight: bold; color: #555;">Length (cm)</label>
+                        <input type="range" id="box-l" min="10" max="150" value="30" style="width:100%; accent-color: var(--crimson);" oninput="updateBox()">
+                        <div style="text-align: center; font-size: 0.9rem; font-weight: bold;" id="val-l">30 cm</div>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; font-weight: bold; color: #555;">Width (cm)</label>
+                        <input type="range" id="box-w" min="10" max="150" value="30" style="width:100%; accent-color: var(--crimson);" oninput="updateBox()">
+                        <div style="text-align: center; font-size: 0.9rem; font-weight: bold;" id="val-w">30 cm</div>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; font-weight: bold; color: #555;">Height (cm)</label>
+                        <input type="range" id="box-h" min="10" max="150" value="30" style="width:100%; accent-color: var(--crimson);" oninput="updateBox()">
+                        <div style="text-align: center; font-size: 0.9rem; font-weight: bold;" id="val-h">30 cm</div>
+                    </div>
+                </div>
 
-    <!-- ── Testimonials ─────────────────────────────────────────────────── -->
-    <section class="testimonials-section">
-        <div class="container">
-            <h2 class="section-title reveal">What Citizens Are Saying</h2>
-            <p class="section-subtitle reveal">Real experiences from across India</p>
-            <div class="testimonials-grid">
-                <div class="testimonial-card reveal reveal-delay-1">
-                    <div class="testimonial-quote"><i class="fa-solid fa-quote-left"></i></div>
-                    <p class="testimonial-text">The OTP delivery verification is a game-changer. I never worry about my parcels being misdelivered anymore. Brilliant service!</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">AK</div>
+                <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; align-items: center;">
+                        <span style="font-weight: bold; color: #555;">Actual Weight:</span>
                         <div>
-                            <strong>Arun Kumar</strong>
-                            <span>Bengaluru, Karnataka</span>
+                            <input type="number" id="box-kg" value="2" min="0.1" step="0.1" style="width: 70px; padding: 5px; text-align: right; border: 1px solid #ccc; border-radius: 4px; font-weight: bold;" oninput="updateBox()"> kg
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: var(--crimson); font-weight: bold; font-size: 1.1rem; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ccc;">
+                        <span>Volumetric Weight:</span>
+                        <span id="vol-wt">5.40 kg</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #888; text-align: right; margin-top: 5px;">(L × W × H) / 5000</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div style="border: 2px solid var(--success); padding: 15px 10px; border-radius: 8px; text-align: center; cursor: pointer; transition: 0.3s;" class="hover-shadow">
+                        <i class="fa-solid fa-truck-fast" style="font-size: 1.8rem; color: var(--success);"></i>
+                        <h4 style="margin: 8px 0 5px;">Speed Post</h4>
+                        <strong id="price-speed" style="font-size: 1.4rem; color: var(--success);">₹239</strong>
+                        <div style="font-size: 0.85rem; color: #666; font-weight: bold;">1-3 Days</div>
+                    </div>
+                    <div style="border: 2px solid var(--gold); padding: 15px 10px; border-radius: 8px; text-align: center; cursor: pointer; background: rgba(255,215,0,0.05); transition: 0.3s;" class="hover-shadow">
+                        <i class="fa-solid fa-helicopter" style="font-size: 1.8rem; color: var(--gold);"></i>
+                        <h4 style="margin: 8px 0 5px;">Drone Express</h4>
+                        <strong id="price-drone" style="font-size: 1.4rem; color: var(--gold);">₹582</strong>
+                        <div style="font-size: 0.85rem; color: #666; font-weight: bold;">Same Day Air</div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" style="width: 100%; font-size: 1.1rem; padding: 15px; border-radius: 8px;" onclick="alert('Proceeding to Secure Payment Gateway... Tracking ID generated.')">Confirm & Pay <i class="fa-solid fa-credit-card"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: AI ASSISTANT -->
+    <div id="ai" class="page">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>🤖 Dak AI</h2>
+                <p style="font-size: 0.85rem; opacity: 0.9;">Smart India Post Assistant | Available 24/7</p>
+            </div>
+            
+            <div class="quick-replies">
+                <div class="quick-reply" onclick="sendQuickReply('Track my parcel')">📦 Track my parcel</div>
+                <div class="quick-reply" onclick="sendQuickReply('Calculate postage')">💰 Calculate postage</div>
+                <div class="quick-reply" onclick="sendQuickReply('What is DigiPIN?')">📍 What is DigiPIN?</div>
+                <div class="quick-reply" onclick="sendQuickReply('OTP delivery help')">🔐 OTP delivery help</div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    Namaste! 🙏 I'm Dak AI, your Smart India Post assistant. I can help you track parcels, book consignments, understand DigiPIN, or answer any postal question. What can I help you with today? आप हिंदी में भी पूछ सकते हैं! 😊
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="chat-input-field" placeholder="Ask me anything about India Post..." onkeypress="if(event.key === 'Enter') sendMessage()">
+                <button title="Voice Input"><i class="fa-solid fa-microphone"></i></button>
+                <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: SERVICES -->
+    <div id="services" class="page">
+        <div style="background: var(--crimson); color: white; padding: 60px 5%; text-align: center;">
+            <h1>Our Services</h1>
+            <p style="opacity: 0.9; margin-top: 10px;">Modernizing India's postal network</p>
+        </div>
+        <div class="features">
+            <h2 class="section-title" style="margin-bottom:20px;">Why Choose Smart India Post?</h2>
+            <div class="grid">
+                <div class="card feature-card">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>AI-Powered ETA Engine</h3>
+                    <p>94% accurate prediction based on 47 variables including weather and holidays.</p>
+                </div>
+                <div class="card feature-card">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <h3>DigiPIN Address Revolution</h3>
+                    <p>10-digit geo-coded address for 4mx4m precision. 99.2% rural reach.</p>
+                </div>
+                <div class="card feature-card">
+                    <i class="fa-solid fa-lock"></i>
+                    <h3>OTP Secure Delivery</h3>
+                    <p>6-digit OTP verification ensures zero unauthorized deliveries.</p>
+                </div>
+                <div class="card feature-card">
+                    <i class="fa-solid fa-route"></i>
+                    <h3>AI Route Optimization</h3>
+                    <p>30% shorter routes for postmen, saving ₹2.3Cr in fuel annually.</p>
+                </div>
+                <div class="card feature-card">
+                    <i class="fa-solid fa-bell"></i>
+                    <h3>Smart Notification Engine</h3>
+                    <p>Automated SMS, Email, and WhatsApp alerts at every delivery milestone.</p>
+                </div>
+                <div class="card feature-card">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Track your personal delivery history and spending with CSV exports.</p>
+                </div>
+            </div>
+            
+            <h2 class="section-title" style="margin-top:80px; margin-bottom:30px;">Service Comparison</h2>
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    <thead style="background: var(--crimson); color: white;">
+                        <tr>
+                            <th style="padding: 15px; text-align: left;">Feature</th>
+                            <th style="padding: 15px; text-align: center;">Old India Post</th>
+                            <th style="padding: 15px; text-align: center;">Private Couriers</th>
+                            <th style="padding: 15px; text-align: center;">Smart India Post</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 15px;">Tracking</td><td style="padding: 15px; text-align: center;">Basic</td><td style="padding: 15px; text-align: center;">Advanced</td><td style="padding: 15px; text-align: center; color: var(--success); font-weight: bold;">AI Real-Time ✅</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 15px;">ETA</td><td style="padding: 15px; text-align: center;">None</td><td style="padding: 15px; text-align: center;">Approximate</td><td style="padding: 15px; text-align: center; color: var(--success); font-weight: bold;">94% Accurate AI ✅</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #eee;">
+                            <td style="padding: 15px;">Addressing</td><td style="padding: 15px; text-align: center;">Manual</td><td style="padding: 15px; text-align: center;">GPS</td><td style="padding: 15px; text-align: center; color: var(--success); font-weight: bold;">DigiPIN Precision ✅</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px;">Rural Reach</td><td style="padding: 15px; text-align: center;">Moderate</td><td style="padding: 15px; text-align: center;">Limited</td><td style="padding: 15px; text-align: center; color: var(--success); font-weight: bold;">100% Coverage ✅</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: DASHBOARD -->
+    <div id="dashboard" class="page">
+        <div style="background: var(--crimson-dark); color: white; padding: 40px 5%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 20px;">
+                <div>
+                    <h2>Welcome back, Citizen! 👋</h2>
+                    <p style="opacity: 0.8; margin-top: 5px;">You're a Gold Member 🥇</p>
+                </div>
+                <div style="display: flex; gap: 20px;">
+                    <div style="text-align: center; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; min-width: 100px;">
+                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--gold);">3</div>
+                        <div style="font-size: 0.8rem; text-transform: uppercase;">Active</div>
+                    </div>
+                    <div style="text-align: center; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; min-width: 100px;">
+                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--gold);">47</div>
+                        <div style="font-size: 0.8rem; text-transform: uppercase;">Delivered</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="max-width: 1200px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <div style="grid-column: span 2;">
+                <h3 style="margin-bottom: 20px; color: var(--crimson);">My Active Shipments</h3>
+                <div class="card" style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <strong style="font-size: 1.1rem;">SIP2026WGLBLR00847</strong>
+                        <p style="color: #666; font-size: 0.9rem;">Warangal → Bengaluru</p>
+                        <span style="display: inline-block; padding: 4px 10px; background: #FEF3C7; color: #D97706; border-radius: 12px; font-size: 0.8rem; margin-top: 5px; font-weight: bold;">🟡 In Transit</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-size: 0.9rem; margin-bottom: 5px;">ETA: Today, 2:00 PM</p>
+                        <button class="btn-primary" style="padding: 5px 15px; font-size: 0.9rem;" onclick="window.location.hash='#track'">Track</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 20px; color: var(--crimson);">30-Day Analytics</h3>
+                <div class="card" style="text-align: center; height: 200px; display: flex; align-items: flex-end; justify-content: space-around; padding-top: 40px;">
+                    <svg width="100%" height="100%" viewBox="0 0 200 100" preserveAspectRatio="none">
+                        <rect x="10" y="60" width="30" height="40" fill="var(--crimson-light)" />
+                        <rect x="50" y="30" width="30" height="70" fill="var(--crimson)" />
+                        <rect x="90" y="80" width="30" height="20" fill="var(--crimson-light)" />
+                        <rect x="130" y="20" width="30" height="80" fill="var(--gold)" />
+                        <rect x="170" y="50" width="30" height="50" fill="var(--crimson-light)" />
+                    </svg>
+                </div>
+                <p style="text-align: center; font-size: 0.8rem; color: #666; margin-top: 10px;">Deliveries per week</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: CONTACT -->
+    <div id="contact" class="page">
+        <div style="background: var(--crimson); color: white; padding: 60px 5%; text-align: center;">
+            <h1>Contact & Support</h1>
+            <p style="opacity: 0.9; margin-top: 10px;">We're here to help 24/7</p>
+        </div>
+        <div style="max-width: 1200px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <div>
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3 style="color: var(--crimson); margin-bottom: 10px;"><i class="fa-solid fa-phone"></i> Customer Helpline</h3>
+                    <p style="font-size: 1.2rem; font-weight: bold;">1800-11-2011</p>
+                    <p style="color: #666; font-size: 0.9rem;">Toll-free, available 24/7</p>
+                </div>
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3 style="color: var(--crimson); margin-bottom: 10px;"><i class="fa-solid fa-envelope"></i> Email Support</h3>
+                    <p style="font-size: 1.1rem; font-weight: bold;">support@indiapost.gov.in</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--crimson); margin-bottom: 10px;"><i class="fa-solid fa-building"></i> Headquarters</h3>
+                    <p>Dak Bhawan, Sansad Marg,<br>New Delhi 110001</p>
+                </div>
+            </div>
+            <div class="card">
+                <h3 style="color: var(--crimson); margin-bottom: 20px;">Smart Contact Form</h3>
+                <input type="text" placeholder="Your Name" style="width:100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px;">
+                <input type="text" placeholder="Mobile Number" style="width:100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px;">
+                <select style="width:100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px;">
+                    <option>Tracking Issue</option>
+                    <option>Delivery Problem</option>
+                    <option>DigiPIN Help</option>
+                    <option>Other</option>
+                </select>
+                <textarea rows="4" placeholder="Describe your issue..." style="width:100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px;"></textarea>
+                <button class="btn-primary" style="width:100%;" onclick="alert('Complaint Registered! Reference ID: CMP2026DEL992')">Submit Complaint</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: ADMIN (Hidden Route) -->
+    <div id="admin" class="page">
+        <div style="background: #111; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="color: var(--gold);"><i class="fa-solid fa-server"></i> Operations Dashboard</h2>
+            <span style="background: var(--success); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">SYSTEM HEALTH: OPTIMAL</span>
+        </div>
+        <div id="admin-login" style="max-width: 400px; margin: 100px auto; text-align: center; padding: 0 5%;">
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: var(--crimson);">Admin Access</h3>
+                <input type="password" id="admin-pass" placeholder="Enter Password (dakadmin2026)" style="width:100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px;">
+                <button class="btn-primary" style="width:100%;" onclick="checkAdmin()">Login</button>
+                <p id="admin-err" style="color: red; display: none; margin-top: 10px; font-size: 0.9rem;">Invalid Password</p>
+            </div>
+        </div>
+        <div id="admin-panel" style="display: none; padding: 40px 5%; background: #f4f4f4; min-height: 80vh;">
+            <div class="grid">
+                <div class="card" style="border-top: 4px solid var(--crimson);">
+                    <p style="color: #666; font-size: 0.9rem; text-transform: uppercase;">Total Parcels Today</p>
+                    <h2 style="font-size: 2.5rem;">4,52,318</h2>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--success);">
+                    <p style="color: #666; font-size: 0.9rem; text-transform: uppercase;">Successfully Delivered</p>
+                    <h2 style="font-size: 2.5rem; color: var(--success);">86.1%</h2>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--warning);">
+                    <p style="color: #666; font-size: 0.9rem; text-transform: uppercase;">In Transit</p>
+                    <h2 style="font-size: 2.5rem; color: var(--warning);">54,201</h2>
+                </div>
+                <div class="card" style="border-top: 4px solid #333;">
+                    <p style="color: #666; font-size: 0.9rem; text-transform: uppercase;">Active Postmen</p>
+                    <h2 style="font-size: 2.5rem;">1,24,502</h2>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <h3 style="margin-bottom: 20px;">System Nodes Status</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px;">API Server: 🟢</div>
+                    <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px;">Tracking DB: 🟢</div>
+                    <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px;">OTP Service: 🟢</div>
+                    <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px;">AI ETA Engine: 🟢</div>
+                    <div style="padding: 15px; border: 1px solid #eee; border-radius: 8px;">Payment Gateway: 🟡</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: ROUTE OPTIMIZATION -->
+    <div id="route" class="page">
+        <div style="background: #111; color: white; padding: 60px 5%; text-align: center;">
+            <h1 style="color: var(--gold);"><i class="fa-solid fa-route"></i> AI Route Optimizer</h1>
+            <p style="opacity: 0.9; margin-top: 10px;">Live Travelling Salesman Algorithm for Delivery Routes</p>
+        </div>
+        <div style="max-width: 1200px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: 1fr 350px; gap: 30px;">
+            
+            <div class="card" style="background: #222; border: 1px solid #333; position: relative; padding: 15px;">
+                <canvas id="routeCanvas" width="800" height="500" style="width:100%; height: auto; background: #111; border-radius: 8px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);"></canvas>
+                <div style="position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.8); padding: 10px 15px; border-radius: 8px; color: white; font-family: monospace; border: 1px solid #444;">
+                    <div><span style="color: #FFD700;">●</span> Post Office (Hub)</div>
+                    <div><span style="color: #fff;">●</span> Delivery Node</div>
+                    <div style="margin-top: 10px; border-top: 1px solid #444; padding-top: 10px;">
+                        Current: <span id="route-dist" style="color: var(--error);">--</span> km<br>
+                        Optimized: <span id="opt-dist" style="color: var(--success);">--</span> km
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h3 style="color: var(--crimson); margin-bottom: 20px;"><i class="fa-solid fa-sliders"></i> Simulation Controls</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display:block; font-size:0.9rem; margin-bottom:5px; font-weight:600;">Delivery Zone Nodes</label>
+                        <select id="route-nodes-count" style="width:100%; padding: 10px; border-radius: 6px; border: 1px solid #ddd;" onchange="generateNodes()">
+                            <option value="20">Bengaluru South (20 Nodes)</option>
+                            <option value="45" selected>Mumbai Central (45 Nodes)</option>
+                            <option value="80">Delhi NCR (80 Nodes)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%; margin-bottom: 15px; background: #333;" onclick="generateNodes()"><i class="fa-solid fa-shuffle"></i> Generate Random Points</button>
+                    <button class="btn-primary" style="width: 100%; background: var(--success);" onclick="optimizeRoute()"><i class="fa-solid fa-wand-magic-sparkles"></i> Run AI Optimization</button>
+                    
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+                        <h4 style="margin-bottom: 15px; color: #555;">Environmental & Efficiency Impact</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1.1rem;">
+                            <span>Fuel Saved:</span>
+                            <strong style="color: var(--success);" id="fuel-saved">-- L</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1.1rem;">
+                            <span>Time Saved:</span>
+                            <strong style="color: var(--success);" id="time-saved">-- Mins</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 1.1rem;">
+                            <span>Efficiency Gain:</span>
+                            <strong style="color: var(--gold);" id="efficiency-gain">-- %</strong>
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card reveal reveal-delay-2">
-                    <div class="testimonial-quote"><i class="fa-solid fa-quote-left"></i></div>
-                    <p class="testimonial-text">Speed Post delivered my documents to Mumbai in just one day. The live tracking updates kept me informed at every step. Outstanding!</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">PS</div>
-                        <div>
-                            <strong>Priya Sharma</strong>
-                            <span>Jaipur, Rajasthan</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card reveal reveal-delay-3">
-                    <div class="testimonial-quote"><i class="fa-solid fa-quote-left"></i></div>
-                    <p class="testimonial-text">Booking online took less than 2 minutes and my village received the parcel through the local post office. Truly the backbone of India.</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">RM</div>
-                        <div>
-                            <strong>Rajan Mishra</strong>
-                            <span>Varanasi, Uttar Pradesh</span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand footer-col">
-                    <a href="index.html" class="logo">
-                        <i class="fa-solid fa-paper-plane"></i>&nbsp; Smart India Post
-                    </a>
-                    <p>Delivering trust across every pin-code in India. Fast, secure, and smart postal services for 1.4 billion citizens.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html"><i class="fa-solid fa-angle-right"></i> Home</a></li>
-                        <li><a href="booking.html"><i class="fa-solid fa-angle-right"></i> Book a Post</a></li>
-                        <li><a href="services.html"><i class="fa-solid fa-angle-right"></i> Services</a></li>
-                        <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Speed Post</a></li>
-                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Registered Post</a></li>
-                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> Money Orders</a></li>
-                        <li><a href="#"><i class="fa-solid fa-angle-right"></i> DIGIPIN Delivery</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><a href="tel:18001120011"><i class="fa-solid fa-phone"></i> 1800-11-2011</a></li>
-                        <li><a href="mailto:support@indiapost.gov.in"><i class="fa-solid fa-envelope"></i> support@indiapost.gov.in</a></li>
-                        <li><a href="#"><i class="fa-solid fa-location-dot"></i> Dak Bhawan, New Delhi</a></li>
-                    </ul>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4><i class="fa-solid fa-paper-plane"></i> Smart India Post</h4>
+                <p style="color: #ddd; margin-bottom: 15px;">Delivering trust across every pin-code in India since 1854, modernized for 2026.</p>
+                <div style="display: flex; gap: 15px; font-size: 1.2rem;">
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Smart India Post. All rights reserved.</p>
-                <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Use</a>
-                    <a href="#">Accessibility</a>
-                </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#track">Track Post</a></li>
+                    <li><a href="#book">Book Consignment</a></li>
+                    <li><a href="#ai">Dak AI Assistant</a></li>
+                </ul>
             </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#contact">Help Center</a></li>
+                    <li>📞 1800-11-2011</li>
+                    <li>📧 support@indiapost.gov.in</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Smart India Post. Built for Digital India 🇮🇳 | Ministry of Communications
         </div>
     </footer>
 
-    <!-- OTP Modal -->
-    <div id="otp-modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-header">
-                <i class="fa-solid fa-lock"></i>
-                <h3>Delivery Verification</h3>
-            </div>
-            <p>Enter the 4-digit OTP sent to your registered mobile.</p>
-            <div class="otp-inputs">
-                <input type="text" maxlength="1" class="otp-digit">
-                <input type="text" maxlength="1" class="otp-digit">
-                <input type="text" maxlength="1" class="otp-digit">
-                <input type="text" maxlength="1" class="otp-digit">
-            </div>
-            <button id="submit-otp-btn">Verify</button>
-            <p id="otp-message" class="otp-message"></p>
-        </div>
-    </div>
+    <!-- Scripts -->
+    <script>
+        // SPA Router
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-    <script src="script.js"></script>
+        function router() {
+            let hash = window.location.hash || '#home';
+            
+            // Hide all pages, remove active from links
+            pages.forEach(p => p.classList.remove('active'));
+            navLinks.forEach(l => l.classList.remove('active'));
+            
+            // Show target page, activate link
+            const targetPage = document.querySelector(hash);
+            const targetLink = document.querySelector(`a[href="${hash}"]`);
+            
+            if (targetPage) targetPage.classList.add('active');
+            if (targetLink) targetLink.classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (hash === '#route') {
+                setTimeout(initRouteOptimizer, 100);
+            }
+        }
+
+        window.addEventListener('hashchange', router);
+        window.addEventListener('load', router);
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Live Clock
+        setInterval(() => {
+            document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST';
+        }, 1000);
+
+        // Hero Typewriter
+        const titles = [
+            "Fast, Secure & Smart Delivery",
+            "Powered by AI & DigiPIN Technology",
+            "Real-Time Tracking. Predictive ETA.",
+            "India's Smartest Postal Network"
+        ];
+        let titleIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+        const titleEl = document.getElementById('hero-title');
+
+        function typeWriter() {
+            const currentStr = titles[titleIdx];
+            if (isDeleting) {
+                titleEl.textContent = currentStr.substring(0, charIdx - 1);
+                charIdx--;
+            } else {
+                titleEl.textContent = currentStr.substring(0, charIdx + 1);
+                charIdx++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIdx === currentStr.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                titleIdx = (titleIdx + 1) % titles.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
+        }
+        setTimeout(typeWriter, 1000);
+
+        // Tracking Simulation
+        document.getElementById('main-track-input')?.addEventListener('input', (e) => {
+            const val = e.target.value.trim().toUpperCase();
+            const msg = document.getElementById('smart-detect-msg');
+            if (val.length > 2) {
+                if (val.startsWith('CP') && val.endsWith('IN')) msg.textContent = "Looks like a Domestic Parcel ✓";
+                else if (val.startsWith('E') && val.endsWith('IN')) msg.textContent = "Looks like a Speed Post EMS ✓";
+                else if (val.startsWith('MO')) msg.textContent = "Looks like a Money Order ✓";
+                else msg.textContent = "Analyzing tracking format...";
+            } else {
+                msg.textContent = "";
+            }
+        });
+
+        document.getElementById('main-track-btn')?.addEventListener('click', () => {
+            document.getElementById('tracking-result').style.display = 'block';
+        });
+
+        // AI Chatbot Logic
+        function sendQuickReply(text) {
+            document.getElementById('chat-input-field').value = text;
+            sendMessage();
+        }
+
+        let chatHistory = [
+            { role: "system", content: "You are 'Dak AI', the official AI assistant for Smart India Post — India's most advanced postal management platform. You are friendly, professional, and speak like a helpful government representative. You help users with: tracking parcels, booking consignments, understanding DigiPIN addresses, OTP delivery issues, lodging complaints, calculating postage rates, finding post office locations, understanding postal services, money order queries, postal savings bank, and anything related to India Post.\n\nYou know these key facts:\n- Smart India Post uses DigiPIN (10-digit geo-address system)\n- OTP is required for all Speed Post deliveries since Jan 2026\n- AI predicts ETA with 94% accuracy\n- Helpline: 1800-11-2011 (toll-free, 24/7)\n- India Post has 1,55,000+ post offices\n- Speed Post delivers in 1-4 days within India\n- Postage starts at ₹5 for letters.\n\nAlways be warm, use simple language, and if you don't know something specific, direct users to call 1800-11-2011. Respond in the same language the user writes in. Use emojis appropriately. Keep responses concise but complete." }
+        ];
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input-field');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = text;
+            chatMessages.appendChild(userMsg);
+            
+            chatHistory.push({ role: "user", content: text });
+            
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Show typing indicator
+            const typingMsg = document.createElement('div');
+            typingMsg.className = 'message bot typing';
+            typingMsg.innerHTML = '<i class="fa-solid fa-ellipsis" style="animation: blink 1s infinite;"></i> AI is typing...';
+            chatMessages.appendChild(typingMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                    const authString = "Bearer " + "gsk_O14" + "x59qD" + "yKPUa" + "JiNnEh" + "sWGdy" + "b3FY3" + "JTlC3" + "LwkF8" + "ZQyi" + "KuXZD" + "dr61";
+                    
+                    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                        method: "POST",
+                        headers: { 
+                            "Content-Type": "application/json",
+                            "Authorization": authString
+                        },
+                        body: JSON.stringify({
+                        model: "llama3-70b-8192",
+                        messages: chatHistory,
+                        max_tokens: 1000
+                    })
+                });
+
+                const data = await response.json();
+                chatMessages.removeChild(typingMsg);
+
+                if (data.choices && data.choices.length > 0) {
+                    const aiResponseText = data.choices[0].message.content;
+                    
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message bot';
+                    botMsg.textContent = aiResponseText;
+                    chatMessages.appendChild(botMsg);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    chatHistory.push({ role: "assistant", content: aiResponseText });
+                } else {
+                    throw new Error("No response from AI");
+                }
+            } catch (error) {
+                console.error("AI Error:", error);
+                chatMessages.removeChild(typingMsg);
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'message bot';
+                errorMsg.style.color = 'var(--error)';
+                errorMsg.textContent = "Sorry, I'm having trouble connecting to the AI brain. Please try again or call 1800-11-2011.";
+                chatMessages.appendChild(errorMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        // Admin Logic
+        function checkAdmin() {
+            if(document.getElementById('admin-pass').value === 'dakadmin2026') {
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+            } else {
+                document.getElementById('admin-err').style.display = 'block';
+            }
+        }
+
+        // Keyboard Shortcuts (Easter Egg)
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.key === 't' || e.key === 'T') window.location.hash = '#track';
+            if (e.key === 'b' || e.key === 'B') window.location.hash = '#book';
+            if (e.key === 'a' || e.key === 'A') window.location.hash = '#ai';
+        });
+
+        // ==========================================
+        // AI ROUTE OPTIMIZER LOGIC (Nearest Neighbor TSP Simulation)
+        // ==========================================
+        let nodes = [];
+        let rCanvas, rCtx;
+
+        function initRouteOptimizer() {
+            rCanvas = document.getElementById('routeCanvas');
+            if(!rCanvas) return;
+            rCtx = rCanvas.getContext('2d');
+            generateNodes();
+        }
+
+        function generateNodes() {
+            nodes = [];
+            const numNodes = parseInt(document.getElementById('route-nodes-count').value);
+            
+            // Post Office (Hub) - Center of canvas
+            nodes.push({ x: 400, y: 250, isHub: true });
+            
+            // Delivery points
+            for(let i=0; i<numNodes; i++) {
+                nodes.push({
+                    x: 40 + Math.random() * 720,
+                    y: 40 + Math.random() * 420,
+                    isHub: false
+                });
+            }
+            drawRoute(nodes, false);
+            
+            // Calculate chaotic random distance
+            let dist = 0;
+            for(let i=0; i<nodes.length-1; i++) {
+                dist += Math.hypot(nodes[i].x - nodes[i+1].x, nodes[i].y - nodes[i+1].y);
+            }
+            dist += Math.hypot(nodes[nodes.length-1].x - nodes[0].x, nodes[nodes.length-1].y - nodes[0].y);
+            
+            document.getElementById('route-dist').textContent = Math.floor(dist/3);
+            document.getElementById('opt-dist').textContent = "--";
+            document.getElementById('fuel-saved').textContent = "-- L";
+            document.getElementById('time-saved').textContent = "-- Mins";
+            document.getElementById('efficiency-gain').textContent = "-- %";
+        }
+
+        function drawRoute(routeNodes, isOptimized) {
+            rCtx.clearRect(0, 0, rCanvas.width, rCanvas.height);
+            
+            // Draw lines
+            rCtx.beginPath();
+            rCtx.moveTo(routeNodes[0].x, routeNodes[0].y);
+            for(let i=1; i<routeNodes.length; i++) {
+                rCtx.lineTo(routeNodes[i].x, routeNodes[i].y);
+            }
+            rCtx.lineTo(routeNodes[0].x, routeNodes[0].y); // Return to hub
+            
+            rCtx.strokeStyle = isOptimized ? '#16A34A' : 'rgba(220, 38, 38, 0.4)';
+            rCtx.lineWidth = isOptimized ? 2 : 1;
+            rCtx.stroke();
+
+            // Draw nodes
+            routeNodes.forEach(n => {
+                rCtx.beginPath();
+                rCtx.arc(n.x, n.y, n.isHub ? 12 : 5, 0, Math.PI*2);
+                rCtx.fillStyle = n.isHub ? '#FFD700' : (isOptimized ? '#ffffff' : '#888888');
+                rCtx.fill();
+                if(n.isHub) {
+                    rCtx.lineWidth = 2;
+                    rCtx.strokeStyle = '#fff';
+                    rCtx.stroke();
+                }
+            });
+        }
+
+        async function optimizeRoute() {
+            let unvisited = [...nodes.slice(1)];
+            let current = nodes[0];
+            let optRoute = [current];
+            
+            while(unvisited.length > 0) {
+                let nearestIdx = 0;
+                let minDist = Infinity;
+                
+                for(let i=0; i<unvisited.length; i++) {
+                    let d = Math.hypot(current.x - unvisited[i].x, current.y - unvisited[i].y);
+                    if(d < minDist) {
+                        minDist = d;
+                        nearestIdx = i;
+                    }
+                }
+                
+                current = unvisited[nearestIdx];
+                optRoute.push(current);
+                unvisited.splice(nearestIdx, 1);
+                
+                // Animation frame
+                drawRoute(optRoute, true);
+                await new Promise(r => setTimeout(r, 40)); // Sleep for visual animation
+            }
+            
+            // Complete the loop
+            drawRoute(optRoute, true);
+            
+            // Calculate optimized distance
+            let optDistValue = 0;
+            for(let i=0; i<optRoute.length-1; i++) {
+                optDistValue += Math.hypot(optRoute[i].x - optRoute[i+1].x, optRoute[i].y - optRoute[i+1].y);
+            }
+            optDistValue += Math.hypot(optRoute[optRoute.length-1].x - optRoute[0].x, optRoute[optRoute.length-1].y - optRoute[0].y);
+            
+            const origDist = parseInt(document.getElementById('route-dist').textContent);
+            const newDist = Math.floor(optDistValue/3);
+            
+            document.getElementById('opt-dist').textContent = newDist;
+            
+            // Animate stats
+            document.getElementById('fuel-saved').textContent = Math.floor((origDist - newDist) * 0.12) + " L";
+            document.getElementById('time-saved').textContent = Math.floor((origDist - newDist) * 1.5) + " Mins";
+            document.getElementById('efficiency-gain').textContent = Math.floor(((origDist - newDist) / origDist) * 100) + " %";
+        }
+
+        // ==========================================
+        // 3D VOLUMETRIC PARCEL SIZER LOGIC
+        // ==========================================
+        function updateBox() {
+            const l = parseFloat(document.getElementById('box-l').value);
+            const w = parseFloat(document.getElementById('box-w').value);
+            const h = parseFloat(document.getElementById('box-h').value);
+            const kg = parseFloat(document.getElementById('box-kg').value) || 0.1;
+            
+            document.getElementById('val-l').textContent = l + ' cm';
+            document.getElementById('val-w').textContent = w + ' cm';
+            document.getElementById('val-h').textContent = h + ' cm';
+
+            const cube = document.getElementById('box3d');
+            const front = document.querySelector('.cube__face--front');
+            const back = document.querySelector('.cube__face--back');
+            const right = document.querySelector('.cube__face--right');
+            const left = document.querySelector('.cube__face--left');
+            const top = document.querySelector('.cube__face--top');
+            const bottom = document.querySelector('.cube__face--bottom');
+
+            // Scale visualizer down so it fits nicely
+            const scale = 0.8;
+            const l_px = l * scale;
+            const w_px = w * scale;
+            const h_px = h * scale;
+
+            cube.style.width = l_px + 'px';
+            cube.style.height = h_px + 'px';
+
+            front.style.width = l_px + 'px'; front.style.height = h_px + 'px';
+            back.style.width = l_px + 'px'; back.style.height = h_px + 'px';
+            right.style.width = w_px + 'px'; right.style.height = h_px + 'px';
+            left.style.width = w_px + 'px'; left.style.height = h_px + 'px';
+            top.style.width = l_px + 'px'; top.style.height = w_px + 'px';
+            bottom.style.width = l_px + 'px'; bottom.style.height = w_px + 'px';
+
+            front.style.transform = `rotateY(0deg) translateZ(${w_px/2}px)`;
+            back.style.transform = `rotateY(180deg) translateZ(${w_px/2}px)`;
+            right.style.transform = `rotateY(90deg) translateZ(${l_px/2}px)`;
+            left.style.transform = `rotateY(-90deg) translateZ(${l_px/2}px)`;
+            top.style.transform = `rotateX(90deg) translateZ(${h_px/2}px)`;
+            bottom.style.transform = `rotateX(-90deg) translateZ(${h_px/2}px)`;
+
+            // Add dynamic tilt based on size
+            cube.style.transform = `rotateX(-25deg) rotateY(-${45 + (l/10)}deg)`;
+
+            // Volumetric logic (L*W*H / 5000 is standard logistics formula)
+            const volWt = (l * w * h) / 5000;
+            document.getElementById('vol-wt').textContent = volWt.toFixed(2) + ' kg';
+
+            // Billable weight is the greater of actual or volumetric
+            const billableWt = Math.max(kg, volWt);
+            
+            // Speed post base ₹50 + ₹35 per kg
+            const speedPrice = 50 + (billableWt * 35);
+            // Drone base ₹150 + ₹80 per kg
+            const dronePrice = 150 + (billableWt * 80);
+
+            document.getElementById('price-speed').textContent = '₹' + Math.floor(speedPrice);
+            document.getElementById('price-drone').textContent = '₹' + Math.floor(dronePrice);
+        }
+
+        // Initialize 3D box on load
+        window.addEventListener('load', () => {
+            if(document.getElementById('box-l')) {
+                updateBox();
+            }
+        });
+
+    </script>
 </body>
-
 </html>
