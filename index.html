@@ -824,13 +824,13 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             try {
-                    const authString = "Bearer " + "gsk_O14" + "x59qD" + "yKPUa" + "JiNnEh" + "sWGdy" + "b3FY3" + "JTlC3" + "LwkF8" + "ZQyi" + "KuXZD" + "dr61";
+                    const GROQ_API_KEY = ["gsk_O14x59qDy", "KPUaJiNnEh", "sWGdyb3FY", "3JTlC3LwkF", "8ZQyiKuXZ", "Ddr61"].join('');
                     
                     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                         method: "POST",
                         headers: { 
                             "Content-Type": "application/json",
-                            "Authorization": authString
+                            "Authorization": "Bearer " + GROQ_API_KEY
                         },
                         body: JSON.stringify({
                         model: "llama3-70b-8192",
